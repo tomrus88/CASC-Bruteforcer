@@ -9,9 +9,8 @@ namespace CASCBruteforcer.Bruteforcers
 {
 	class Salsa20 : IHash
 	{
-
-		private string EncryptedMagic;
-		private string DecryptedMagic;
+		private byte[] EncryptedMagic;
+		private byte[] DecryptedMagic;
 		private uint[] IV;
 		private ulong LowerOffset;
 		private ulong UpperOffset;
@@ -22,12 +21,12 @@ namespace CASCBruteforcer.Bruteforcers
 			if (args.Length != 7)
 				throw new ArgumentException("Invalid argument amount");
 
-			EncryptedMagic = args[1];
-			if (Encoding.ASCII.GetByteCount(EncryptedMagic) != 4)
+			EncryptedMagic = args[1].ToByteArray();
+			if (EncryptedMagic.Length != 4)
 				throw new ArgumentException("Invalid Encrypted Magic size");
 
-			DecryptedMagic = args[2];
-			if (Encoding.ASCII.GetByteCount(DecryptedMagic) != 4)
+			DecryptedMagic = args[2].ToByteArray();
+			if (DecryptedMagic.Length != 4)
 				throw new ArgumentException("Invalid Decrypted Magic size");
 
 			IV = ToUIntArray(args[3]);
@@ -35,8 +34,12 @@ namespace CASCBruteforcer.Bruteforcers
 			if (!ulong.TryParse(args[4], out LowerOffset))
 				throw new ArgumentException("Invalid Lower offset");
 
+			Console.WriteLine($"Lower offset: {LowerOffset}");
+
 			if (!ulong.TryParse(args[5], out UpperOffset))
 				throw new ArgumentException("Invalid Upper offset");
+
+			Console.WriteLine($"Upper offset: {UpperOffset}");
 
 			if (!byte.TryParse(args[6], out IncrementMode) || IncrementMode > 3)
 				throw new ArgumentException("Invalid Increment Flag");
@@ -45,8 +48,8 @@ namespace CASCBruteforcer.Bruteforcers
 		public void Start()
 		{
 			KernelWriter kernel = new KernelWriter(Properties.Resources.Salsa);
-			kernel.ReplaceArray("DATA", Encoding.ASCII.GetBytes(EncryptedMagic));
-			kernel.ReplaceArray("MAGIC", Encoding.ASCII.GetBytes(DecryptedMagic));
+			kernel.ReplaceArray("DATA", EncryptedMagic);
+			kernel.ReplaceArray("MAGIC", DecryptedMagic);
 			kernel.Replace("IV0", IV[0]);
 			kernel.Replace("IV1", IV[1]);
 
@@ -107,6 +110,21 @@ namespace CASCBruteforcer.Bruteforcers
 			uint[] result = new uint[2];
 			Buffer.BlockCopy(data, 0, result, 0, data.Length);
 			return result;
+		}
+	}
+
+	public static class CStringExtensions
+	{
+		public static byte[] ToByteArray(this string str)
+		{
+			str = str.Replace(" ", string.Empty);
+
+			var res = new byte[str.Length / 2];
+			for (int i = 0; i < res.Length; ++i)
+			{
+				res[i] = Convert.ToByte(str.Substring(i * 2, 2), 16);
+			}
+			return res;
 		}
 	}
 }

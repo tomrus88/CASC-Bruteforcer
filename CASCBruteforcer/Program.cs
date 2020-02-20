@@ -51,6 +51,8 @@ namespace CASCBruteforcer
 			
 			hash.LoadParameters(args);
 			hash.Start();
+
+			Console.ReadKey();
 		}
 
 		static void BenchmarkJenkins(params string[] args)

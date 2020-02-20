@@ -61,7 +61,7 @@ void salsa20(uint *dancers) {
 }
 
 kernel void Bruteforce(ulong x, ulong y, uchar mode, ulong offset)
-{	
+{
 	const size_t index = get_global_id(0) + offset;
 
 	//printf(" Index: %d", get_global_id(1));
@@ -74,7 +74,7 @@ kernel void Bruteforce(ulong x, ulong y, uchar mode, ulong offset)
 	state[7] = {IV1};
 	state[10] = 2036477238;
 	state[15] = 1797285236;
-	
+
 	// set the key for this iteration
 	x += (index * (mode & 1));
 	y += (index * (mode & 2));
