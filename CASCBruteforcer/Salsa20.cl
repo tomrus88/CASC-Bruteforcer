@@ -96,21 +96,35 @@ kernel void Bruteforce(ulong x, ulong y, uchar mode, ulong offset)
 	//printf("State[0][2]: %u %X\r\n", (state[0] >> 16) & 0xFF, ((state[0] >> 16) & 0xFF) ^ Data[2]);
 	//printf("State[0][3]: %u %X\r\n", (state[0] >> 24) & 0xFF, ((state[0] >> 24) & 0xFF) ^ Data[3]);
 
+	//printf("State[1]:    %X\r\n", state[1]);
+	//printf("State[1][0]: %u %X\r\n", (state[1] >> 0) & 0xFF, ((state[1] >> 0) & 0xFF) ^ Data[4]);
+	//printf("State[1][1]: %u %X\r\n", (state[1] >> 8) & 0xFF, ((state[1] >> 8) & 0xFF) ^ Data[5]);
+	//printf("State[1][2]: %u %X\r\n", (state[1] >> 16) & 0xFF, ((state[1] >> 16) & 0xFF) ^ Data[6]);
+	//printf("State[1][3]: %u %X\r\n", (state[1] >> 24) & 0xFF, ((state[1] >> 24) & 0xFF) ^ Data[7]);
+
 	//printf("Magic[0]: %X\r\n", Magic[0]);
 	//printf("Magic[1]: %X\r\n", Magic[1]);
 	//printf("Magic[2]: %X\r\n", Magic[2]);
 	//printf("Magic[3]: %X\r\n", Magic[3]);
+	//printf("Magic[4]: %X\r\n", Magic[4]);
+	//printf("Magic[5]: %X\r\n", Magic[5]);
+	//printf("Magic[6]: %X\r\n", Magic[6]);
+	//printf("Magic[7]: %X\r\n", Magic[7]);
 
 	// faster than inline ifs
 	uchar result =
 		((((state[0] >>  0) & 0xFF) ^ Data[0]) == Magic[0]) &
 		((((state[0] >>  8) & 0xFF) ^ Data[1]) == Magic[1]) &
 		((((state[0] >> 16) & 0xFF) ^ Data[2]) == Magic[2]) &
-		((((state[0] >> 24) & 0xFF) ^ Data[3]) == Magic[3]);
+		((((state[0] >> 24) & 0xFF) ^ Data[3]) == Magic[3]) &
+		((((state[1] >>  0) & 0xFF) ^ Data[4]) == Magic[4]) &
+		((((state[1] >>  8) & 0xFF) ^ Data[5]) == Magic[5]) &
+		((((state[1] >> 16) & 0xFF) ^ Data[6]) == Magic[6]) &
+		((((state[1] >> 24) & 0xFF) ^ Data[7]) == Magic[7]);
 
 	// check if the first state equals the magic '# Bu'
 	if(result)
 	{
-		printf(" -- MATCH INDEX: %u KEY: %llX-%llX --\r\n", index, x, y);
+		printf(" -- MATCH INDEX: %u KEY: %016llX-%016llX --\r\n", index, x, y);
 	}
 }

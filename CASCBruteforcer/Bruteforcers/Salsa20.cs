@@ -22,11 +22,11 @@ namespace CASCBruteforcer.Bruteforcers
 				throw new ArgumentException("Invalid argument amount");
 
 			EncryptedMagic = args[1].ToByteArray();
-			if (EncryptedMagic.Length != 4)
+			if (EncryptedMagic.Length != 8)
 				throw new ArgumentException("Invalid Encrypted Magic size");
 
 			DecryptedMagic = args[2].ToByteArray();
-			if (DecryptedMagic.Length != 4)
+			if (DecryptedMagic.Length != 8)
 				throw new ArgumentException("Invalid Decrypted Magic size");
 
 			IV = ToUIntArray(args[3]);
