@@ -64,6 +64,7 @@ namespace CASCBruteforcer.Bruteforcers
 
 			Stopwatch time = Stopwatch.StartNew();
 			Console.WriteLine($"Starting Salsa Hashing :: {ulong.MaxValue} combinations over {parts} part(s) ");
+
 			for (long i = 0; i < parts; i++)
 			{
 				// workload size for this iteration
@@ -75,13 +76,13 @@ namespace CASCBruteforcer.Bruteforcers
 
 				if (i % 200 == 0)
 				{
-					Console.WriteLine($"  {completed += size} completed in {time.Elapsed.TotalSeconds.ToString("0.00")} secs");
+					Console.WriteLine($"  {completed += size} completed in {time.Elapsed.TotalSeconds:0.00} secs");
 					PrintStats(completed, size, time);
 				}
 			}
 
 			time.Stop();
-			Console.WriteLine($"Completed in {time.Elapsed.TotalSeconds.ToString("0.00")} secs");
+			Console.WriteLine($"Completed in {time.Elapsed.TotalSeconds:0.00} secs");
 		}
 
 		private void PrintStats(ulong completed, uint size, Stopwatch time)
