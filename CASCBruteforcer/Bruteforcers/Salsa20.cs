@@ -63,6 +63,7 @@ namespace CASCBruteforcer.Bruteforcers
 			ulong completed = 0;
 
 			Stopwatch time = Stopwatch.StartNew();
+			Stopwatch ptime = Stopwatch.StartNew();
 			Console.WriteLine($"Starting Salsa Hashing :: {ulong.MaxValue} combinations over {parts} part(s) ");
 
 			for (long i = 0; i < parts; i++)
@@ -76,8 +77,9 @@ namespace CASCBruteforcer.Bruteforcers
 
 				if (i % 200 == 0)
 				{
-					Console.WriteLine($"  {completed += size} completed in {time.Elapsed.TotalSeconds:0.00} secs");
+					Console.WriteLine($"Part {i}/{parts}, {completed += size} completed in {ptime.Elapsed.TotalSeconds:0.00} secs ({time.Elapsed.TotalSeconds:0.00} secs total)");
 					PrintStats(completed, size, time);
+					ptime = Stopwatch.StartNew();
 				}
 			}
 
@@ -96,7 +98,7 @@ namespace CASCBruteforcer.Bruteforcers
 				if ((IncrementMode & 2) == 2)
 					y += completed;
 
-				Console.WriteLine($"  Current offsets Lower: {x}  Upper: {y}");
+				Console.WriteLine($"Current offsets Lower: {x}  Upper: {y}");
 			}
 		}
 
