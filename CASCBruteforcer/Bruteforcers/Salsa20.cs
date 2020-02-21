@@ -75,7 +75,7 @@ namespace CASCBruteforcer.Bruteforcers
 				cl.SetParameter(LowerOffset, UpperOffset, IncrementMode, completed);
 				cl.Invoke(0, size, cl.Context.Length); // use all contexts
 
-				if (i % 200 == 0)
+				if (i % 50 == 0)
 				{
 					Console.WriteLine($"Part {i}/{parts}, {completed += size} completed in {ptime.Elapsed.TotalSeconds:0.00} secs ({time.Elapsed.TotalSeconds:0.00} secs total)");
 					PrintStats(completed, size, time);
@@ -98,7 +98,10 @@ namespace CASCBruteforcer.Bruteforcers
 				if ((IncrementMode & 2) == 2)
 					y += completed;
 
-				Console.WriteLine($"Current offsets Lower: {x}  Upper: {y}");
+				if (time.Elapsed.TotalSeconds > 0)
+					Console.WriteLine($"Current offsets Lower: {x}  Upper: {y} Speed: {completed / (ulong)(time.Elapsed.TotalSeconds)} h/sec");
+				else
+					Console.WriteLine($"Current offsets Lower: {x}  Upper: {y} Speed: {0} h/sec");
 			}
 		}
 

@@ -113,14 +113,14 @@ kernel void Bruteforce(ulong x, ulong y, uchar mode, ulong offset)
 
 	// faster than inline ifs
 	uchar result =
-		((((state[0] >>  0) & 0xFF) ^ Data[0]) == Magic[0]) &
-		((((state[0] >>  8) & 0xFF) ^ Data[1]) == Magic[1]) &
-		((((state[0] >> 16) & 0xFF) ^ Data[2]) == Magic[2]) &
-		((((state[0] >> 24) & 0xFF) ^ Data[3]) == Magic[3]) &
-		((((state[1] >>  0) & 0xFF) ^ Data[4]) == Magic[4]) &
-		((((state[1] >>  8) & 0xFF) ^ Data[5]) == Magic[5]) &
-		((((state[1] >> 16) & 0xFF) ^ Data[6]) == Magic[6]) &
-		((((state[1] >> 24) & 0xFF) ^ Data[7]) == Magic[7]);
+		((((state[0] >>  0) & 0xFF) ^ Data[0]) == Magic[0]) &&
+		((((state[0] >>  8) & 0xFF) ^ Data[1]) == Magic[1]) &&
+		((((state[0] >> 16) & 0xFF) ^ Data[2]) == Magic[2]) &&
+		((((state[0] >> 24) & 0xFF) ^ Data[3]) == Magic[3]) &&
+		((((state[1] >>  0) & 0xFF) ^ Data[4]) == Magic[4]);// &&
+		//((((state[1] >>  8) & 0xFF) ^ Data[5]) == Magic[5]) &&
+		//((((state[1] >> 16) & 0xFF) ^ Data[6]) == Magic[6]) &&
+		//((((state[1] >> 24) & 0xFF) ^ Data[7]) == Magic[7]);
 
 	// check if the first state equals the magic '# Bu'
 	if(result)
